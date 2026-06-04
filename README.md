@@ -1,136 +1,162 @@
-# 🛒 E-Commerce Microservices Architecture  
-**Software Architecture and Design – Group Assignment**
+<div align="center">
+  <img src="https://i.ibb.co/7xJ7DW5Q/nexatech-bg.jpg" alt="NexaTech Banner" width="100%" />
+
+  <h1>NexaTech E-Commerce Platform</h1>
+
+  <p><strong>A Highly Scalable, Event-Driven Microservices Architecture</strong></p>
+
+  <p>
+    <a href="https://opensource.org/licenses/MIT">
+      <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT" />
+    </a>
+    <img src="https://img.shields.io/badge/React-19.2.0-61dafb?logo=react&style=flat-square" alt="React 19.2.0" />
+    <img src="https://img.shields.io/badge/React%20Native-0.81.5-61dafb?logo=react&style=flat-square" alt="React Native 0.81.5" />
+    <img src="https://img.shields.io/badge/NestJS-11.0.1-ea2845?logo=nestjs&style=flat-square" alt="NestJS 11.0.1" />
+    <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178c6?logo=typescript&style=flat-square" alt="TypeScript 5.9.3" />
+    <img src="https://img.shields.io/badge/Prisma-6.19.0-2d3748?logo=prisma&style=flat-square" alt="Prisma 6.19.0" />
+  </p>
+</div>
 
 ---
 
 ## 📌 Project Overview
-This project demonstrates an **E-commerce Platform** built using the **Microservices Architecture Style**.  
-Each core business capability is implemented as an independent microservice, allowing the system to be **scalable, resilient, and easy to maintain**.
 
-The project is developed as part of the **Software Architecture and Design** course at **FIT – Industrial University of Ho Chi Minh City (IUH)**.
+NexaTech is a modern e-commerce ecosystem built with a focus on **scalability, resilience, and high performance**. The platform leverages a polyglot microservices architecture, combining the strengths of **Java (Spring Cloud)**, **Node.js (NestJS)**, and **Python (FastAPI)**.
 
----
-
-## 👥 Team Members – Software Architecture Group
-- **Nguyễn Trung Nguyên**
-- **Nguyễn Trần Gia Sĩ**
-- **Nguyễn Văn Minh**
-- **Đào Quốc Tuấn**
+This project is the result of intensive collaboration in the **Software Architecture and Design** course at **FIT – Industrial University of Ho Chi Minh City (IUH)**.
 
 ---
 
-## 🧩 System Architecture Overview
-The system is composed of multiple loosely coupled microservices communicating through **REST APIs** and **asynchronous messaging**, with an **API Gateway** acting as a single entry point.
+## 🏛️ Architectural Patterns
 
-### Key Characteristics
-- Independent services and databases  
-- Centralized API Gateway  
-- Synchronous & asynchronous communication  
-- Horizontal scalability and fault isolation  
+NexaTech implements several sophisticated architectural patterns to solve complex distributed systems challenges:
 
----
+### 1️⃣ Microservices Architecture
+- **Polyglot Services**: Leveraging the best tool for the job — Java (Spring Boot) for core business, Node.js (NestJS) for high-performance sub-systems, and Python (FastAPI) for AI/ML.
+- **Service Mesh & Discovery**: Centralized routing via **Spring Cloud Gateway** and dynamic discovery with **Eureka**.
+- **Database-per-Service**: Strict data isolation using PostgreSQL, MongoDB, and Redis tailored to each domain's needs.
 
-## 🛠️ Microservices List
+### 2️⃣ Event-Driven Architecture (EDA)
+- **Asynchronous Backbone**: **Apache Kafka** facilitates loosely coupled communication between services.
+- **Transactional Outbox**: Ensures reliable message delivery and data consistency across distributed boundaries.
+- **Event Sourcing**: Capturing state changes as a sequence of events for auditability and complex reactive workflows.
 
-### 1️⃣ User Service
-- Handles user registration, authentication, and profile management  
-- Uses **JWT / OAuth** for secure authentication  
-- Stores user data in a dedicated database  
+### 3️⃣ Space-Based Architecture (SBA)
+- **High-Concurrency Processing**: Optimized for flash sales and peak traffic using **Redis** as a distributed "Space".
+- **Atomic Operations**: Custom **Lua scripts** execute directly within the memory grid to ensure thread-safety and ultra-low latency without database bottlenecks.
+- **In-Memory Data Grid**: Reducing read/write pressure on persistent stores by offloading hot-data transactions to the memory layer.
 
-### 2️⃣ Product Catalog Service
-- Manages products, categories, pricing, and images  
-- Supports search and filtering features  
-- Optimized for fast querying using NoSQL databases  
-
-### 3️⃣ Order Service
-- Manages the full order lifecycle (create → process → complete)  
-- Validates orders and tracks order status  
-- Communicates with Inventory and Payment services  
-
-### 4️⃣ Inventory Service
-- Tracks product stock levels  
-- Updates inventory after successful purchases  
-- Notifies Order Service when products are out of stock  
-
-### 5️⃣ Payment Service
-- Handles payment transactions securely  
-- Integrates with third-party payment gateways (e.g., Stripe, PayPal)  
-
-### 6️⃣ Recommendation Service
-- Provides personalized product recommendations  
-- Uses user behavior and order history  
-- Can be extended with machine learning models  
-
-### 7️⃣ Notification Service
-- Sends email or SMS notifications  
-- Events include order confirmation, payment success, and shipping updates  
-
-### 8️⃣ API Gateway
-- Single entry point for web and mobile clients  
-- Routes requests to appropriate services  
-- Handles authentication, rate limiting, and load balancing  
+### 4️⃣ Pipeline Architecture
+- **Data Processing Pipelines**: The **Recommendation Service** implements a multi-stage pipeline:
+  1. **Collector**: Ingests user behavior events from Kafka.
+  2. **Sync**: Normalizes and structures data for training.
+  3. **Training**: Executes machine learning models (Collaborative Filtering, Ranking).
+  4. **API / Serving**: Serves real-time personalized results through the gateway.
+- **CI/CD Pipelines**: Fully automated Build → Test → Deploy flow using GitLab CI/CD, Terraform, and Ansible.
 
 ---
 
-## 🔗 Communication Patterns
-- **Synchronous:** REST / gRPC for real-time service-to-service calls  
-- **Asynchronous:** Message broker (Kafka / RabbitMQ) for event-based communication  
+## 🏗️ System Architecture
+
+### 🌐 High-Level Design
+The system employs a centralized **API Gateway** as the single entry point, backed by **Service Discovery (Eureka)** and **Centralized Configuration (Spring Cloud Config)**. Communication between services is a mix of synchronous **REST APIs** and asynchronous **Event-Driven messaging** via **Kafka**.
+
+![Architecture Overview](images/nexatech_architect_overview.png)
+
+### 🤖 AI-Powered Orchestration
+NexaTech integrates advanced AI capabilities through a dedicated **MCP (Model Context Protocol) Orchestrator**, enabling intelligent search, recommendations, and agentic workflows.
+
+![MCP Orchestrator Architecture](images/mcp_orchestrator_architect_diagram.png)
 
 ---
 
-## 🚀 Implementation Approach
+## 🛠️ Tech Stack & Infrastructure
 
-### Step 1: Independent Development
-Each microservice has:
-- Its own codebase  
-- Its own database  
-- Its own deployment pipeline  
-
-**Example Technology Stack**
-- User Service: Node.js + MongoDB  
-- Order Service: Java + PostgreSQL  
-- Inventory Service: Python + MySQL  
-- Payment Service: Python + External Payment APIs  
-
-### Step 2: API Gateway Integration
-- Centralized routing and authentication  
-- Simplifies client-side interaction  
-
-### Step 3: Scalability & Resilience
-- Horizontal scaling for high-traffic services  
-- Service discovery (Consul / Eureka)  
-- Circuit breakers and fallback mechanisms  
-
-### Step 4: Monitoring & Logging
-- Centralized logging using ELK Stack  
-- Monitoring with Prometheus & Grafana  
-- Alerting for critical system issues  
+### **Core Technologies**
+| Layer | Technologies |
+|---|---|
+| **Backend** | Java 21, Spring Boot 4, Spring Cloud, NestJS 11, FastAPI (Python 3.12) |
+| **Frontend** | React 19, Next.js 15, Vite 8, TailwindCSS v4, React Native |
+| **Data Stores** | PostgreSQL, MongoDB, Redis |
+| **Messaging** | Apache Kafka (KRaft mode) |
+| **Identity** | Keycloak 26.5.2 (OpenID Connect / OAuth2) |
+| **DevOps** | Terraform 1.6+, Ansible, Docker Compose |
+| **Cloud** | AWS (EC2, S3, RDS, ALB) |
 
 ---
 
-## 🔄 Order Processing Flow
-1. User places an order via frontend  
-2. Request is routed through the API Gateway  
-3. Order Service checks stock with Inventory Service  
-4. Payment Service processes the payment  
-5. Inventory is updated after successful payment  
-6. Notification Service sends confirmation to the user  
-7. Recommendation Service updates user preferences  
+## 📂 Repository Breakdown
+
+| Repository | Description | Link |
+|---|---|---|
+| **📦 NexaTech Backend** | Core business logic, microservices, and API Gateway. | [View Repo](https://gitlab.com/software-architecture264301/nexatech-backend/) |
+| **🎨 NexaTech Frontend** | Storefront (Next.js) and Admin Dashboard (React/Vite). | [View Repo](https://gitlab.com/software-architecture264301/nexatech-frontend) |
+| **⚙️ NexaTech Infra** | Infrastructure as Code (Terraform) and Configuration Management (Ansible). | [View Repo](https://gitlab.com/software-architecture264301/nexatech-infra) |
 
 ---
 
-## ✅ Benefits of Microservices Architecture
-- **Independent Scaling:** Scale only high-demand services  
-- **Fault Isolation:** Failures do not cascade across the system  
-- **Technology Flexibility:** Each service uses the best-fit technology  
-- **Faster Deployment:** Services can be updated independently  
+## 🚀 CI/CD Pipelines
+
+Our automation strategy ensures high code quality and seamless deployments across all environments.
+
+### **Backend Pipeline**
+Continuous integration for all polyglot microservices, including automated testing and Docker image builds.
+
+![Backend CI/CD](images/backend_ci_cd_pipeline_overview.png)
+
+### **Infrastructure Pipeline**
+Automated provisioning of AWS resources using Terraform and configuration of environments with Ansible.
+
+![Infra CI/CD](images/infra_ci_cd_pipeline_overview.png)
 
 ---
 
-## 📎 Conclusion
-This microservices-based e-commerce system is designed to be **modular, scalable, and resilient**, making it suitable for real-world, high-traffic applications while remaining easy to extend and maintain.
+## 👥 Meet the Team
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center">
+<a href="https://gitlab.com/giasinguyen">
+<img src="https://gitlab.com/uploads/-/system/user/avatar/32611929/avatar.png?width=800" width="80px;" style="border-radius:50%;" alt=""/><br/>
+<sub><b>Nguyễn Trần Gia Sĩ</b></sub>
+</a><br/>
+<sub>🎯 Team Lead</sub><br/>
+<sub>Backend Developer</sub>
+</td>
+<td align="center">
+<a href="https://gitlab.com/nvminh162">
+<img src="https://gitlab.com/uploads/-/system/user/avatar/26748859/avatar.png?width=800" width="80px;" style="border-radius:50%;" alt=""/><br/>
+<sub><b>Nguyễn Văn Minh</b></sub>
+</a><br/>
+<sub>🎨 Fullstack</sub><br/>
+<sub>Fullstack Developer</sub>
+</td>
+<td align="center">
+<a href="https://gitlab.com/nguyennguyen0">
+<img src="https://gitlab.com/uploads/-/system/user/avatar/32527945/avatar.png?width=800" width="80px;" style="border-radius:50%;" alt=""/><br/>
+<sub><b>Nguyễn Trung Nguyên</b></sub>
+</a><br/>
+<sub>⚙️ Devops & AI/ML</sub><br/>
+<sub>API Developer</sub>
+</td>
+<td align="center">
+<a href="https://gitlab.com/YezsuChiChoo">
+<img src="https://gitlab.com/uploads/-/system/user/avatar/32611732/avatar.png?width=800" width="80px;" style="border-radius:50%;" alt=""/><br/>
+<sub><b>Đào Quốc Tuấn</b></sub>
+</a><br/>
+<sub>🎨 Fullstack</sub><br/>
+<sub>Fullstack Developer</sub>
+</td>
+</tr>
+</table>
+
+</div>
 
 ---
 
-**Faculty of Information Technology – IUH**  
-**Software Architecture and Design**
+<div align="center">
+  <strong>Faculty of Information Technology – Industrial University of Ho Chi Minh City (IUH)</strong><br/>
+  <em>Software Architecture and Design - 2026</em>
+</div>
